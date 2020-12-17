@@ -1,0 +1,237 @@
+<div id="deduction-types">
+  <div class="side-list-wrapper">
+    <header>
+      <button class="list-header-action-item list-header-add" (click)="onClickAddButton()">Add</button>
+      <button
+        class="list-header-action-item list-header-delete"
+        (click)="onClickDeleteButton()"
+        [disabled]="newDeductFlag"
+      >
+        Delete
+      </button>
+    </header>
+    <div class="side-list">
+      <ul class="list-group">
+        <li
+          *ngFor="let type of deduct_types"
+          class="list-group-item"
+          [ngClass]="{ active: type?.id == currentType?.id }"
+          (click)="selectDeductType(type)"
+        >
+          {{ type.name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="tabs-content-wrapper">
+    <ngb-tabset>
+      <ngb-tab title="Details">
+        <ng-template ngbTabContent>
+          <div class="tab-details-content">
+            <form (ngSubmit)="saveDetails()" [formGroup]="employerDeductioinTypesForm" novalidate>
+              <div class="form-group">
+                <div class="form-item-wrapper">
+                  <label>Name</label>
+                  <label class="d-block">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                      autocomplete="name"
+                      [placeholder]="'Name' | translate"
+                    />
+                    <span hidden translate>Name</span>
+                    <small
+                      [hidden]="
+                        employerDeductioinTypesForm.controls.name.valid ||
+                        employerDeductioinTypesForm.controls.name.untouched
+                      "
+                      class="text-danger"
+                      translate
+                    >
+                      Name is required
+                    </small>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper">
+                  <label>Calculation method</label>
+                  <label class="d-block">
+                    <select #calcMethod class="form-control select-item" formControlName="calculation_method">
+                      <option *ngFor="let method of deduct_calc_methods" [value]="method.id">
+                        <p class="">{{ method.name }}</p>
+                        <!-- <span>{{method.description}}</span> -->
+                      </option>
+                    </select>
+                  </label>
+                </div>
+                <div class="form-item-wrapper mb-3">
+                  <label>{{ calcMethod.value == 0 ? 'Default amount' : 'Default percentage' }}</label>
+                  <label class="d-block">
+                    <div class="rate-wrapper">
+                      <span *ngIf="calcMethod.value == 0" class="pound-text">&pound;</span>
+                      <input
+                        type="number"
+                        class="form-control amount-input"
+                        formControlName="default_amount"
+                        autocomplete="default_amount"
+                        [placeholder]="'Default Percentage' | translate"
+                      />
+                      <span *ngIf="calcMethod.value != 0" class="per-hour-text">%</span>
+                    </div>
+                    <span hidden translate>Default Percentage</span>
+                  </label>
+                </div>
+                <div class="form-item-wrapper">
+                  <label>Default repetition</label>
+                  <label class="d-block">
+                    <select class="form-control select-item" formControlName="default_repetition">
+                      <option *ngFor="let repetition of deduct_default_repetition" [value]="repetition.id">
+                        <p>{{ repetition.name }}</p>
+                      </option>
+                    </select>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper">
+                  <label>Allowed deductions</label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="deduct_tax" />
+                      <span class="per-hour-text">Deduct before tax</span>
+                    </div>
+                    <span hidden translate>Deduct before tax</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="deduct_nic" />
+                      <span class="per-hour-text">Deduct before National Insurance contributions</span>
+                    </div>
+                    <span hidden translate>Deduct before National Insurance contributions</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="deduct_employee" />
+                      <span class="per-hour-text">Deduct before employee pension</span>
+                    </div>
+                    <span hidden translate>Deduct before employee pension</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="deduct_employer" />
+                      <span class="per-hour-text">Deduct before employer pension</span>
+                    </div>
+                    <span hidden translate>Deduct before employer pension</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="deduct_cis" />
+                      <span class="per-hour-text">Deduct before CIS deduction</span>
+                    </div>
+                    <span hidden translate>Deduct before CIS deduction</span>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper">
+                  <label>Usability</label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input
+                        type="checkbox"
+                        class="form-control overtime-input"
+                        formControlName="deduct_used_employees"
+                      />
+                      <span class="per-hour-text">This rate can be used by employees</span>
+                    </div>
+                    <span hidden translate>This rate can be used by employees</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="deduct_used_cis" />
+                      <span class="per-hour-text">This rate can be used by CIS subcontractors</span>
+                    </div>
+                    <span hidden translate>This rate can be used by CIS subcontractors</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-buttons-wrapper mt-3">
+                <button
+                  class="btn btn-primary mr-2"
+                  type="submit"
+                  [disabled]="employerDeductioinTypesForm.invalid || isLoading"
+                >
+                  <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+                  <span translate>Save Changes</span>
+                </button>
+                <button
+                  class="btn btn-primary"
+                  type="button"
+                  [disabled]="employerDeductioinTypesForm.invalid || isLoading"
+                  (click)="cancelChanges()"
+                >
+                  <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+                  <span translate>Cancel Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab *ngIf="!newDeductFlag">
+        <ng-template ngbTabTitle>Where Is It Used?</ng-template>
+        <ng-template ngbTabContent>
+          <div class="used-tab-content">
+            <p>
+              This hourly rate is associated with the following employees and pay periods
+            </p>
+            <div class="used-item-content row">
+              <div class="col-6 border-right"></div>
+              <div class="col-6"></div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>
+
+<ng-template #saveModalContent let-modal>
+  <div id="deduct-type-save-modal">
+    <div class="modal-header">
+      <!-- <h4 class="modal-title" id="modal-basic-title">Profile update</h4> -->
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Do you want to save changes?</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="saveChangedDeductType('Save click')">Yes</button>
+      <button type="button" class="btn btn-outline-dark" (click)="unsaveChangedDeductType('Save click')">No</button>
+      <button type="button" class="btn btn-outline-dark" (click)="cancelChangedDeductType('Save click')">Cancel</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteModalContent let-modal>
+  <div id="deduct-type-delete-modal">
+    <div class="modal-header">
+      <!-- <h4 class="modal-title" id="modal-basic-title">Profile update</h4> -->
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Are you sure you with to delete the deduction type?</label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="confirmDeleteDeductType('Save click')">Yes</button>
+      <button type="button" class="btn btn-outline-dark" (click)="cancelDeleteDeductType('Save click')">No</button>
+    </div>
+  </div>
+</ng-template>

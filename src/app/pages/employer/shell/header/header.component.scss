@@ -1,0 +1,32 @@
+@import "src/theme/theme-variables";
+
+.navbar {
+  // margin-bottom: $spacer;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.2rem 1rem;
+  border-bottom: 1px solid grey;
+
+  .navbar-brand {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 1rem 0.5rem;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .navbar-nav {
+    margin: auto;
+    flex-direction: row;
+  }
+}
+
+.nav-link.dropdown-toggle {
+  cursor: pointer;
+}

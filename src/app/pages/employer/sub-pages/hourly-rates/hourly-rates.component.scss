@@ -1,0 +1,60 @@
+#hourly-rate {
+  display: flex;
+  height: calc(100vh - 120px);
+
+  .side-list-wrapper {
+    width: 240px;
+    flex: 0 0 240px;
+    padding: 20px 15px;
+    border-right: 1px solid grey;
+    overflow-y: auto;
+  }
+
+  .tabs-content-wrapper {
+    flex: 0 1 100%;
+    padding: 20px 15px;
+    overflow-y: auto;
+  }
+
+  .tab-details-content {
+    padding: 20px;
+
+    .rate-wrapper {
+      display: flex;
+
+      .pound-text {
+        padding-right: 20px;
+        line-height: 38px;
+      }
+
+      .amount-input {
+        flex: 1;
+      }
+
+      .per-hour-text {
+        padding-left: 20px;
+        line-height: 38px;
+      }
+
+      .overtime-input {
+        width: auto;
+      }
+    }
+  }
+
+  .used-tab-content {
+    padding: 20px;
+    min-height: calc(100vh - 202px);
+    display: flex;
+    flex-flow: column;
+
+    .used-item-content {
+      flex-grow: 1;
+      border: 1px solid #dee2e6;
+
+      .border-right {
+        border-right: 1px solid #dee2e6;
+      }
+    }
+  }
+}

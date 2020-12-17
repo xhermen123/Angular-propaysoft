@@ -1,0 +1,109 @@
+#deduction-types {
+  display: flex;
+  height: calc(100vh - 120px);
+
+  .side-list-wrapper {
+    width: 240px;
+    flex: 0 0 240px;
+    border-right: 1px solid grey;
+    overflow-y: auto;
+
+    header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px;
+      border-bottom: 1px solid #dee2e6;
+
+      .list-header-action-item {
+        margin: 0px 5px;
+        color: #0073dd;
+        cursor: pointer;
+        border-radius: 3px;
+        border: 1px solid;
+        padding: 0px 5px;
+      }
+
+      button:disabled {
+        background-color: white;
+        opacity: 0.5;
+      }
+    }
+
+    .side-list {
+      // padding: 20px 15px;
+
+      .list-group-item {
+        border-radius: 0px !important;
+      }
+    }
+  }
+
+  .tabs-content-wrapper {
+    flex: 0 1 100%;
+    padding: 20px 15px;
+    overflow-y: auto;
+  }
+
+  .tab-details-content {
+    padding: 20px;
+
+    .rate-wrapper {
+      display: flex;
+
+      .pound-text {
+        padding-right: 20px;
+        line-height: 38px;
+      }
+
+      .amount-input {
+        flex: 1;
+      }
+
+      .per-hour-text {
+        padding-left: 20px;
+        line-height: 38px;
+      }
+
+      .overtime-input {
+        width: auto;
+      }
+    }
+  }
+
+  .used-tab-content {
+    padding: 20px;
+    min-height: calc(100vh - 202px);
+    display: flex;
+    flex-flow: column;
+
+    .used-item-content {
+      flex-grow: 1;
+      border: 1px solid #dee2e6;
+
+      .border-right {
+        border-right: 1px solid #dee2e6;
+      }
+    }
+  }
+}
+
+#deduct-type-delete-modal {
+  .modal-header {
+    padding: 0.5rem;
+    border-bottom: none;
+    position: relative;
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 0;
+      margin: 0;
+      z-index: 2;
+    }
+  }
+
+  .modal-footer {
+    padding: 0.5rem;
+  }
+}

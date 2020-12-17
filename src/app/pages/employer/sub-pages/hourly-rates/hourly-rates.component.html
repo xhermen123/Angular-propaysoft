@@ -1,0 +1,185 @@
+<div id="hourly-rate">
+  <div class="side-list-wrapper">
+    <div class="side-list"></div>
+  </div>
+  <div class="tabs-content-wrapper">
+    <ngb-tabset>
+      <ngb-tab title="Details">
+        <ng-template ngbTabContent>
+          <div class="tab-details-content">
+            <form (ngSubmit)="saveDetails()" [formGroup]="employerHourlyRateForm" novalidate>
+              <div class="form-group">
+                <div class="form-item-wrapper">
+                  <label>Description</label>
+                  <label class="d-block">
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="description"
+                      autocomplete="description"
+                      [placeholder]="'Description' | translate"
+                    />
+                    <span hidden translate>Description</span>
+                    <small
+                      [hidden]="
+                        employerHourlyRateForm.controls.description.valid ||
+                        employerHourlyRateForm.controls.description.untouched
+                      "
+                      class="text-danger"
+                      translate
+                    >
+                      Description is required
+                    </small>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper mb-3">
+                  <label>Rate</label>
+                  <label class="d-block">
+                    <div class="rate-wrapper">
+                      <span class="pound-text">&pound;</span>
+                      <input
+                        type="number"
+                        class="form-control amount-input"
+                        formControlName="rate"
+                        autocomplete="rate"
+                        [placeholder]="'Rate' | translate"
+                      />
+                      <span class="per-hour-text">per hour</span>
+                    </div>
+                    <span hidden translate>Rate</span>
+                    <small
+                      [hidden]="
+                        employerHourlyRateForm.controls.rate.valid || employerHourlyRateForm.controls.rate.untouched
+                      "
+                      class="text-danger"
+                      translate
+                    >
+                      Rate is required
+                    </small>
+                  </label>
+                </div>
+                <div class="form-item-wrapper">
+                  <label class="mb-0">Overtime</label>
+                  <label class="d-block">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="description" />
+                      <span class="per-hour-text">This is an overtime rate</span>
+                    </div>
+                    <span hidden translate>This is an overtime rate</span>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper">
+                  <label>Allowed deductions</label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="taxDeductable" />
+                      <span class="per-hour-text">Tax can be deducted</span>
+                    </div>
+                    <span hidden translate>Overtime</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="niDeductable" />
+                      <span class="per-hour-text">National Insurance contributions can be deducted</span>
+                    </div>
+                    <span hidden translate>National Insurance contributions can be deducted</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="employeeDeductable" />
+                      <span class="per-hour-text">Employee pension can be deducted</span>
+                    </div>
+                    <span hidden translate>Employee pension can be deducted</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="employerDeductable" />
+                      <span class="per-hour-text">Employer pension can be deducted</span>
+                    </div>
+                    <span hidden translate>Employer pension can be deducted</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="cisDeductable" />
+                      <span class="per-hour-text">CIS deduction can be deducted</span>
+                    </div>
+                    <span hidden translate>Overtime</span>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper">
+                  <label>Annual leave</label>
+                  <label class="d-block">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="accrueAnnualLeave" />
+                      <span class="per-hour-text">Accrue annual leave (where applicable)</span>
+                    </div>
+                    <span hidden translate>Accrue annual leave (where applicable)</span>
+                  </label>
+                </div>
+                <div class="form-item-wrapper">
+                  <label>Minimum wage</label>
+                  <label class="d-block">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="minWage" />
+                      <span class="per-hour-text">Contributes to gross for minimum wage</span>
+                    </div>
+                    <span hidden translate>Contributes to gross for minimum wage</span>
+                  </label>
+                </div>
+                <hr />
+                <div class="form-item-wrapper">
+                  <label>Usability</label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="usedByEmployees" />
+                      <span class="per-hour-text">This rate can be used by employees</span>
+                    </div>
+                    <span hidden translate>This rate can be used by employees</span>
+                  </label>
+                  <label class="d-block mb-0">
+                    <div class="rate-wrapper">
+                      <input type="checkbox" class="form-control overtime-input" formControlName="usedCIS" />
+                      <span class="per-hour-text">This rate can be used by CIS subcontractors</span>
+                    </div>
+                    <span hidden translate>This rate can be used by CIS subcontractors</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-buttons-wrapper mt-3">
+                <button class="btn btn-primary" type="submit" [disabled]="employerHourlyRateForm.invalid || isLoading">
+                  <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+                  <span translate>Save Changes</span>
+                </button>
+                <button
+                  class="btn btn-primary ml-2"
+                  type="button"
+                  [disabled]="employerHourlyRateForm.invalid || isLoading"
+                >
+                  <i class="fas fa-cog fa-spin" [hidden]="!isLoading"></i>
+                  <span translate>Cancel Changes</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle>Where Is It Used?</ng-template>
+        <ng-template ngbTabContent>
+          <div class="used-tab-content">
+            <p>
+              This hourly rate is associated with the following employees and pay periods
+            </p>
+            <div class="used-item-content row">
+              <div class="col-6 border-right"></div>
+              <div class="col-6"></div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>
